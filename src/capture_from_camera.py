@@ -1,11 +1,12 @@
 import cv2
 
 
-class ShapeImageCaptor():
+class VideoFeed():
 
     def __init__(self):
-        self.queue = []
         self._capture = cv2.VideoCapture(2)
+
+    def get_ca
 
     def clear(self):
         self.queue = []
