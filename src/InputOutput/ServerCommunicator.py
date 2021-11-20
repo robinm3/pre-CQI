@@ -5,6 +5,7 @@ from typing import List
 HOST = "127.0.0.1"
 PORT = 42069
 
+
 class ServerCommunicator:
     shape_to_letter = {
         "square": "S",

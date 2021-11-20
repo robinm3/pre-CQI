@@ -1,6 +1,6 @@
-from send_to_server import ServerCommunicator
+from src.InputOutput.ServerCommunicator import ServerCommunicator
 from shape_detector import detect_shape
-from capture_from_camera import ShapeImageCaptor
+from src.InputOutput.ShapeImageCaptor import ShapeImageCaptor
 
 if __name__ == '__main__':
 
