@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 
 def detect_shape(image):
@@ -30,6 +31,16 @@ def detect_shape(image):
                 print("arrow")
                 return "arrow"
 
+
+def are_two_images_similar(image1, image2):
+    diffLevel = 0.5
+    if image1 is None:
+        return False
+    average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
+    average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
+    if average1 - diffLevel <= average2 <= average1 + diffLevel:
+        return True
+    return False
 
 def detect_png(image):
     image1 = cv2.imread(image)
