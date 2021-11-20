@@ -27,12 +27,12 @@ def detect_shape(image):
 
 
 def are_two_images_similar(image1, image2):
-    diffLevel = 0.5
+    diff_level = 5
     if image1 is None:
         return False
     average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
     average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
-    if average1 - diffLevel <= average2 <= average1 + diffLevel:
+    if average1 - diff_level <= average2 <= average1 + diff_level:
         return True
     return False
 
