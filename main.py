@@ -1,10 +1,12 @@
+import numpy as np
+
 from capture_from_camera import capture_from_camera
 from send_to_server import ServerCommunicator
 from shape_detector import detect_shape
 
 if __name__ == '__main__':
 
-    server = ServerCommunicator()
+    server = None
     cap = capture_from_camera()
 
     lastImage = None
@@ -12,7 +14,8 @@ if __name__ == '__main__':
 
     while True:
         success, img = cap.read()
-        if success and img != lastImage:
+
+        if success and not np.array_equal(img, lastImage):
             lastImage = img
 
             shape = detect_shape(img)
