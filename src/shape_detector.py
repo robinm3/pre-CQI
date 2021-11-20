@@ -4,26 +4,32 @@ import numpy as np
 
 def detect_shape(image):
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    ret, threshold = cv2.threshold(gray_image, 240, 255, cv2.THRESH_BINARY)
+    _, threshold = cv2.threshold(gray_image, 240, 255, cv2.THRESH_BINARY)
     contours, _ = cv2.findContours(threshold, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     if len(contours) == 0:
         print("circle")
         return "circle"
 
-    approx = cv2.approxPolyDP(contours[1], 0.005 * cv2.arcLength(contours[1], True), True)
+    for contour in contours:
 
-    if len(approx) == 4:
-        print("square")
-        return "square"
+        area = cv2.contourArea(contour)
 
-    elif len(approx) == 3:
-        print("croix")
-        return "croix"
+        if area > 5000:
 
-    else:
-        print("arrow")
-        return "arrow"
+            approx = cv2.approxPolyDP(contour, 0.005 * cv2.arcLength(contour, True), True)
+
+            if len(approx) == 4:
+                print("square")
+                return "square"
+
+            elif len(approx) == 12:
+                print("croix")
+                return "croix"
+
+            elif len(approx) == 7:
+                print("arrow")
+                return "arrow"
 
 
 def are_two_images_similar(image1, image2):
@@ -35,6 +41,7 @@ def are_two_images_similar(image1, image2):
     if average1 - diff_level <= average2 <= average1 + diff_level:
         return True
     return False
+
 
 def detect_png(image):
     image1 = cv2.imread(image)

@@ -19,7 +19,7 @@ if __name__ == '__main__':
             lastImage = img
 
             shape = detect_shape(img)
-            if shape:
+            if shape and isinstance(shape, str):
                 shapeList.append(shape)
 
         if len(shapeList) > 4:
