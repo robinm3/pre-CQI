@@ -5,16 +5,15 @@ if __name__ == '__main__':
     cap = capture_from_camera()
 
     lastImage = None
+    shapeList = []
     while True:
         success, img = cap.read()
         if success and img != lastImage:
             lastImage = img
 
-            shapes = detect_shape(img)
+            shape = detect_shape(img)
+            shapeList.append(shape)
 
-            send_to_server(shapes)
-
-
-
-
-
+        if len(shapeList) > 4:
+            send_to_server(shapeList)
+            shapeList = []
