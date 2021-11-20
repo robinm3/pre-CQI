@@ -15,14 +15,12 @@ if __name__ == '__main__':
     while True:
         success, img = cap.read()
 
-        if success:
+        if success and not np.array_equal(img, lastImage):
             lastImage = img
 
             shape = detect_shape(img)
             shapeList.append(shape)
 
         if len(shapeList) > 4:
-            for shape in shapeList:
-                print(shape)
             server.send(shapeList)
             shapeList = []
