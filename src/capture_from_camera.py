@@ -1,6 +1,6 @@
 import threading
 import cv2
-from threading import Thread, Condition, current_thread
+from threading import Thread
 from shape_detector import are_two_images_similar
 
 

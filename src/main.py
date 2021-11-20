@@ -1,7 +1,5 @@
-import cv2
-
 from send_to_server import ServerCommunicator
-from shape_detector import detect_shape, are_two_images_similar
+from shape_detector import detect_shape
 from capture_from_camera import ShapeImageCaptor
 
 if __name__ == '__main__':
