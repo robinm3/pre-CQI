@@ -1,16 +1,7 @@
-import cv2;
-# This is a sample Python script.
+import cv2
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from send_to_server import send_to_server
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     frameWidth = 640
     frameHeight = 480
@@ -18,7 +9,18 @@ if __name__ == '__main__':
     cap.set(3, frameWidth)
     cap.set(4, frameHeight)
     cap.set(10, 150)
+
+    lastImage = None
     while True:
         success, img = cap.read()
+        if success and img != lastImage:
+            lastImage = img
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+            shapes = detect_shape(img)
+
+            send_to_server(shapes)
+
+
+
+
+
