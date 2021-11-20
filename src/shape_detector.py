@@ -14,7 +14,7 @@ def detect_shape(image):
 
         area = cv2.contourArea(contour)
 
-        if area > 1000:
+        if area > 500:
 
             approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
 
