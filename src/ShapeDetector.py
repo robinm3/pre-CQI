@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-class ShapeDetector: 
+class ShapeDetector:
 
     def __init__(self):
         pass
@@ -32,28 +32,28 @@ class ShapeDetector:
                 else:
                     return "arrow"
 
-    def are_two_images_similar(image1, image2):
-        if image1 is None or image2 is None:
-            return False
-
-        precision_black_bytes = 1
-        precision_average_color = 1
-
-        if len(image1) < 1 or len(image2) < 1:
-            return False
-        non_zero = np.sum(image1 == 255)
-        non_zero2 = np.sum(image2 == 255)
-        average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
-        average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
-
-        if abs(non_zero - non_zero2) <= precision_black_bytes or abs(average1 - average2) <= precision_average_color:
-            return True
-        return False
-
-
     def detect_png(self, image):
         image1 = cv2.imread(image)
-        return(self.detect_shape(image1))
+        return self.detect_shape(image1)
+
+
+def are_two_images_similar(image1, image2):
+    if image1 is None or image2 is None:
+        return False
+
+    precision_black_bytes = 1
+    precision_average_color = 1
+
+    if len(image1) < 1 or len(image2) < 1:
+        return False
+    non_zero = np.sum(image1 == 255)
+    non_zero2 = np.sum(image2 == 255)
+    average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
+    average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
+
+    if abs(non_zero - non_zero2) <= precision_black_bytes or abs(average1 - average2) <= precision_average_color:
+        return True
+    return False
 
 
 if __name__ == '__main__':

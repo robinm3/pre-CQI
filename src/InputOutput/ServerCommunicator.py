@@ -19,7 +19,7 @@ class ServerCommunicator:
         self.address = (HOST, PORT)
 
     def send(self, shapes: List[str]):
-        shapeString = "".join((self.shape_to_letter.get(shape) for shape in shapes))
-        data = json.dumps({"sequence": shapeString})
+        shape_string = "".join((self.shape_to_letter.get(shape) for shape in shapes))
+        data = json.dumps({"sequence": shape_string})
         data_in_bytes = bytes(data, encoding="utf-8")
         self.socket.sendto(data_in_bytes, self.address)

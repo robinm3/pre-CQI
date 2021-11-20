@@ -1,7 +1,8 @@
 import threading
 import cv2
 from threading import Thread
-from shape_detector import are_two_images_similar
+
+from src.ShapeDetector import are_two_images_similar
 
 
 class ShapeImageCaptor:
