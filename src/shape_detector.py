@@ -14,9 +14,9 @@ def detect_shape(image):
 
         area = cv2.contourArea(contour)
 
-        if area > 500:
+        if area > 1000:
 
-            approx = cv2.approxPolyDP(contour, 0.005 * cv2.arcLength(contour, True), True)
+            approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
 
             if len(approx) == 4:
                 return "square"
@@ -24,7 +24,7 @@ def detect_shape(image):
             elif len(approx) == 12:
                 return "plus"
 
-            elif len(approx) == 7:
+            else:
                 return "arrow"
             
 
