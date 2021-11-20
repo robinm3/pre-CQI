@@ -29,14 +29,18 @@ def detect_shape(image):
             elif len(approx) == 7:
                 print("arrow")
                 return "arrow"
-            
+
+
+def detect_png(image):
+    image1 = cv2.imread(image)
+    detect_shape(image1)
+
 
 if __name__ == '__main__':
-    detect_shape(cv2.imread("../img/square.png"))
+    detect_png("../img/square.png")
     print("-------------------")
-    detect_shape(cv2.imread("../img/arrow.png"))
+    detect_png("../img/arrow.png")
     print("-------------------")
-    detect_shape(cv2.imread("../img/circle.png"))
+    detect_png("../img/circle.png")
     print("-------------------")
-    detect_shape(cv2.imread("../img/croix.png"))
-
+    detect_png("../img/croix.png")
