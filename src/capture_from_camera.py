@@ -8,6 +8,7 @@ class ShapeImageCaptor:
 
     def __init__(self):
         self._capture = cv2.VideoCapture(2)
+        self._first_image_skipped = True
         self.queue = []
         self.lock = threading.Lock()
         self._running = False
@@ -30,7 +31,9 @@ class ShapeImageCaptor:
             success, current_image = self._capture.read()
             if success and not are_two_images_similar(last_image, current_image):
                 last_image = current_image
-                with self.lock:
-                    self.queue.append(current_image)
-                    print(f"New shape found. Current queue size: {len(self.queue)}")
+                if self._first_image_skipped:
+                    with self.lock:
+                        self.queue.append(current_image)
+                        print(f"New shape found. Current queue size: {len(self.queue)}")
+                    self._first_image_skipped = True
 
