@@ -4,12 +4,14 @@ from threading import Thread, Condition, current_thread
 from shape_detector import are_two_images_similar
 
 
-class ShapeImageCaptor():
+class ShapeImageCaptor:
 
     def __init__(self):
         self._capture = cv2.VideoCapture(2)
         self.queue = []
         self.lock = threading.Lock()
+        self._running = False
+        self._thread = None
 
     def launch(self):
         self._thread = Thread(target=self._loop)
@@ -23,13 +25,12 @@ class ShapeImageCaptor():
         print("Stopped video capture thread")
 
     def _loop(self):
-        lastImage = None
-        while(self._running):
-            success, currentImage = self._capture.read()
-
-            if success and not are_two_images_similar(lastImage, currentImage):
-                lastImage = currentImage
+        last_image = None
+        while self._running:
+            success, current_image = self._capture.read()
+            if success and not are_two_images_similar(last_image, current_image):
+                last_image = current_image
                 with self.lock:
-                    self.queue.append(currentImage)
+                    self.queue.append(current_image)
                     print(f"New shape found. Current queue size: {len(self.queue)}")
 
