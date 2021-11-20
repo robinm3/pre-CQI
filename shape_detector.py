@@ -5,25 +5,33 @@ def detect_shape(image):
     image = cv2.imread(image)
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     ret, threshold = cv2.threshold(gray_image, 240, 255, cv2.THRESH_BINARY)
-    contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(threshold, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
-    for contour in contours:
-        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
+    if len(contours) == 0:
+        print("circle")
+        return "circle"
 
-        print(approx)
-        if len(approx) == 4:
-            print(approx, "square")
+    approx = cv2.approxPolyDP(contours[1], 0.005 * cv2.arcLength(contours[1], True), True)
 
-        if len(approx) == 12:
-            print(approx, "croix")
+    if len(approx) == 4:
+        print("square")
+        return "square"
 
-        if len(approx) == 7:
-            print(approx, "arrow")
+    elif len(approx) == 3:
+        print("croix")
+        return "croix"
 
+    else:
+        print("arrow")
+        return "arrow"
+        
 
 if __name__ == '__main__':
+    #test
     detect_shape("square.png")
     print("-------------------")
     detect_shape("arrow.png")
     print("-------------------")
     detect_shape("circle.png")
+    print("-------------------")
+    detect_shape("croix.png")
