@@ -13,13 +13,9 @@ def detect_shape(image):
         return "circle"
 
     for contour in contours:
-
         area = cv2.contourArea(contour)
 
         if area > 500:
-
-            cv2.drawContours(image, [contour], 0, (0, 0, 255), 5)
-            cv2.destroyAllWindows()
 
             approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
 
@@ -30,8 +26,6 @@ def detect_shape(image):
                 return "plus"
             else:
                 return "arrow"
-            
-
 
 def are_two_images_similar(image1, image2):
     if image1 is None or image2 is None:
