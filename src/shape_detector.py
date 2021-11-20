@@ -33,8 +33,8 @@ def detect_shape(image):
 
 
 def are_two_images_similar(image1, image2):
-    precision_1 = 5
-    precision_2 = 5
+    precision_black_bytes = 5
+    precision_average_color = 5
 
     if len(image1) < 1 or len(image2) < 1:
         return False
@@ -43,7 +43,7 @@ def are_two_images_similar(image1, image2):
     average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
     average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
 
-    if abs(non_zero - non_zero2) <= precision_1 or abs(average1 - average2) <= precision_2:
+    if abs(non_zero - non_zero2) <= precision_black_bytes or abs(average1 - average2) <= precision_average_color:
         return True
     return False
 
