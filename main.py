@@ -1,7 +1,8 @@
 from capture_from_camera import capture_from_camera
-from send_to_server import send_to_server
+from send_to_server import ServerCommunicator
 
 if __name__ == '__main__':
+    server = ServerCommunicator()
     cap = capture_from_camera()
 
     lastImage = None
@@ -15,5 +16,5 @@ if __name__ == '__main__':
             shapeList.append(shape)
 
         if len(shapeList) > 4:
-            send_to_server(shapeList)
+            server.send(shapeList)
             shapeList = []
