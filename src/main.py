@@ -9,9 +9,9 @@ if __name__ == '__main__':
     server = ServerCommunicator()
     cap = capture_from_camera()
 
-    lastImage = None
+    lastImage = []
     shapeList = []
-
+    it = 0
     while True:
         success, img = cap.read()
 
@@ -19,9 +19,10 @@ if __name__ == '__main__':
             lastImage = img
 
             shape = detect_shape(img)
-            if shape and isinstance(shape, str):
-                shapeList.append(shape)
 
-        if len(shapeList) > 4:
+            if shape and shape is not None and isinstance(shape, str):
+                shapeList.append(str(shape))
+
+        if len(shapeList) == 5:
             server.send(shapeList)
-            shapeList = []
+            shapeList.clear()

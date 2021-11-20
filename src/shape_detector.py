@@ -25,7 +25,7 @@ def detect_shape(image):
 
             elif len(approx) == 12:
                 print("croix")
-                return "croix"
+                return "plus"
 
             elif len(approx) == 7:
                 print("arrow")
@@ -33,12 +33,17 @@ def detect_shape(image):
 
 
 def are_two_images_similar(image1, image2):
-    diff_level = 5
-    if image1 is None:
+    precision_1 = 5
+    precision_2 = 5
+
+    if len(image1) < 1 or len(image2) < 1:
         return False
+    non_zero = np.sum(image1 == 255)
+    non_zero2 = np.sum(image2 == 255)
     average1 = np.average(np.average(np.average(image1, axis=0), axis=0))
     average2 = np.average(np.average(np.average(image2, axis=0), axis=0))
-    if average1 - diff_level <= average2 <= average1 + diff_level:
+
+    if abs(non_zero - non_zero2) <= precision_1 or abs(average1 - average2) <= precision_2:
         return True
     return False
 
