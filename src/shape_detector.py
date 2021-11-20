@@ -27,11 +27,11 @@ def detect_shape(image):
         
 
 if __name__ == '__main__':
-    #test
-    detect_shape("square.png")
+    detect_shape("../img/square.png")
     print("-------------------")
-    detect_shape("arrow.png")
+    detect_shape("../img/arrow.png")
     print("-------------------")
-    detect_shape("circle.png")
+    detect_shape("../img/circle.png")
     print("-------------------")
-    detect_shape("croix.png")
+    detect_shape("../img/croix.png")
+
