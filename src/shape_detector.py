@@ -17,6 +17,11 @@ def detect_shape(image):
 
         if area > 500:
 
+            cv2.drawContours(image, [contour], 0, (0, 0, 255), 5)
+            cv2.imshow('shapes', image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
             approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
 
             if len(approx) == 4:
