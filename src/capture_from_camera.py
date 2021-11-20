@@ -1,16 +1,35 @@
+import threading
 import cv2
+from threading import Thread, Condition, current_thread
+from shape_detector import are_two_images_similar
 
 
-class VideoFeed():
+class ShapeImageCaptor():
 
     def __init__(self):
         self._capture = cv2.VideoCapture(2)
-
-    def get_ca
-
-    def clear(self):
         self.queue = []
+        self.lock = threading.Lock()
 
-    def show_frame(self):
-        ret, frame = self._capture.read()
-        cv2.imshow('frame', frame)
+    def launch(self):
+        self._thread = Thread(target=self._loop)
+        self._running = True
+        self._thread.start()
+        print("Launched video capture thread")
+
+    def stop(self):
+        self._running = False
+        self._thread.join()
+        print("Stopped video capture thread")
+
+    def _loop(self):
+        lastImage = None
+        while(self._running):
+            success, currentImage = self._capture.read()
+
+            if success and not are_two_images_similar(lastImage, currentImage):
+                lastImage = currentImage
+                with self.lock:
+                    self.queue.append(currentImage)
+                    print(f"New shape found. Current queue size: {len(self.queue)}")
+

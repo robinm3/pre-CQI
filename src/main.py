@@ -2,26 +2,24 @@ import cv2
 
 from send_to_server import ServerCommunicator
 from shape_detector import detect_shape, are_two_images_similar
+from capture_from_camera import ShapeImageCaptor
 
 if __name__ == '__main__':
 
     server = ServerCommunicator()
-    
-    cap = cv2.VideoCapture(2)
+    shape_image_captor = ShapeImageCaptor()
+    currentShapeList = []
 
-    lastImage = None
-    shapeList = []
+    shape_image_captor.launch()
 
     while True:
-        success, img = cap.read()
-
-        if success and not are_two_images_similar(lastImage, img):
-            lastImage = img
-
-            shape = detect_shape(img)
+        if shape_image_captor.queue:
+            with shape_image_captor.lock:
+                image = shape_image_captor.queue.pop()
+            shape = detect_shape(image)
+            print (f"Evaluation of shape: {shape}")
             if shape and isinstance(shape, str):
-                shapeList.append(shape)
-
-        if len(shapeList) > 4:
-            server.send(shapeList)
-            shapeList = []
+                currentShapeList.append(shape)
+            if len(currentShapeList) > 4:
+                server.send(currentShapeList)
+                currentShapeList = []
