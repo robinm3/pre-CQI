@@ -8,7 +8,7 @@ def detect_shape(image):
     contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     for contour in contours:
-        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contours, True), True)
+        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
 
         if len(approx) == 4:
             print("square")
