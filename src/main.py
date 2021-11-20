@@ -3,7 +3,7 @@ import cv2
 
 from capture_from_camera import VideoFeed
 from send_to_server import ServerCommunicator
-from shape_detector import detect_shape
+from shape_detector import detect_shape, are_two_images_similar
 
 if __name__ == '__main__':
 
@@ -22,13 +22,13 @@ if __name__ == '__main__':
 
     while True:
         success, img = cap.read()
-        cv2.imshow('img', img)
-        time.sleep(10)
-        if success and img != lastImage:
+
+        if success and not are_two_images_similar(lastImage, img):
             lastImage = img
 
             shape = detect_shape(img)
-            shapeList.append(shape)
+            if shape:
+                shapeList.append(shape)
 
         if len(shapeList) > 4:
             server.send(shapeList)
