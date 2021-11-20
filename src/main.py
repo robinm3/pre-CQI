@@ -6,7 +6,7 @@ from shape_detector import detect_shape
 
 if __name__ == '__main__':
 
-    server = None
+    server = ServerCommunicator()
     cap = capture_from_camera()
 
     lastImage = None
@@ -15,12 +15,14 @@ if __name__ == '__main__':
     while True:
         success, img = cap.read()
 
-        if success and not np.array_equal(img, lastImage):
+        if success:
             lastImage = img
 
             shape = detect_shape(img)
             shapeList.append(shape)
 
         if len(shapeList) > 4:
+            for shape in shapeList:
+                print(shape)
             server.send(shapeList)
             shapeList = []
